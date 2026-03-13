@@ -7,7 +7,7 @@
 
 <body style="margin:0;background:black;overflow:hidden;cursor:pointer;">
 
-<div id="blackscreen" style="
+<div id="black" style="
 position:fixed;
 top:0;
 left:0;
@@ -15,8 +15,7 @@ width:100%;
 height:100%;
 background:black;
 z-index:10;
-">
-</div>
+"></div>
 
 <video id="video"
 preload="auto"
@@ -28,24 +27,21 @@ style="display:none;width:100vw;height:100vh;object-fit:cover;">
 
 let started = false;
 let video = document.getElementById("video");
-let black = document.getElementById("blackscreen");
+let black = document.getElementById("black");
 
 document.addEventListener("click", async function(){
 
   if(started) return;
   started = true;
 
-  // entrar em fullscreen
   if(document.documentElement.requestFullscreen){
     await document.documentElement.requestFullscreen();
   }
 
-  // manter tela preta por 2 segundos
   setTimeout(function(){
 
     black.style.display="none";
     video.style.display="block";
-
     video.play();
 
   },2000);
