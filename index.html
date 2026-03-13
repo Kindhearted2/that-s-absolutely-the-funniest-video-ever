@@ -1,46 +1,56 @@
 <!DOCTYPE html>
 <html>
-<body style="margin:0;background:black;overflow:hidden;">
+<head>
+<meta charset="UTF-8">
+<title>Video</title>
+</head>
 
-<div id="overlay" style="
+<body style="margin:0;background:black;overflow:hidden;cursor:pointer;">
+
+<div id="blackscreen" style="
 position:fixed;
+top:0;
+left:0;
 width:100%;
 height:100%;
 background:black;
-display:flex;
-align-items:center;
-justify-content:center;
-color:white;
-font-family:sans-serif;
-cursor:pointer;
+z-index:10;
 ">
-Click to start video
 </div>
 
-<video id="v" style="display:none;width:100vw;height:100vh;object-fit:cover;">
+<video id="video"
+preload="auto"
+style="display:none;width:100vw;height:100vh;object-fit:cover;">
 <source src="video.mp4" type="video/mp4">
 </video>
 
 <script>
 
-let overlay = document.getElementById("overlay");
-let v = document.getElementById("v");
+let started = false;
+let video = document.getElementById("video");
+let black = document.getElementById("blackscreen");
 
-overlay.onclick = async function(){
+document.addEventListener("click", async function(){
 
-  if (document.documentElement.requestFullscreen){
+  if(started) return;
+  started = true;
+
+  // entrar em fullscreen
+  if(document.documentElement.requestFullscreen){
     await document.documentElement.requestFullscreen();
   }
 
-  overlay.innerHTML="";
+  // manter tela preta por 2 segundos
+  setTimeout(function(){
 
-  setTimeout(()=>{
-    overlay.style.display="none";
-    v.style.display="block";
-    v.play();
+    black.style.display="none";
+    video.style.display="block";
+
+    video.play();
+
   },2000);
 
-}
+});
 
 </script>
 
